@@ -19,6 +19,18 @@ typedef struct {
 } ANDGate;
 
 typedef struct {
+  int num;
+  Path **ins;
+  Path *out1;
+} ANDGateN;
+
+typedef struct {
+  int num;
+  Path **ins;
+  Path *out1;
+} ORGateN;
+
+typedef struct {
   Path *in1;
   Path *in2;
   Path *out1;
@@ -60,6 +72,18 @@ typedef struct {
   FA *f1;
 } PFA;
 
+typedef struct {
+  ANDGate *agates;
+  ORGate *ogates;
+} CLU;
+
+typedef struct {
+  PFA *pfa;
+  CLU *clu;
+  ANDGateN *agaten;
+  ORGateN *ogaten;
+} CLA4;
+
 void path_set_signal(Path *p, Signal s);
 Signal path_get_signal(Path *p);
 void path_init(Path *p);
@@ -74,9 +98,15 @@ void andgate_init(ANDGate *agate, Path *in1, Path *in2, Path *out1);
 void andgate_run(ANDGate *agate);
 void andgate_driver(Signal a, Signal b);
 
-void orgate_init(ORGate *orgate, Path *in1, Path *in2, Path *out1);
-void orgate_run(ORGate *orgate);
+void andgaten_init(ANDGateN *agaten, Path **ins, Path *out1, int num);
+void andgaten_run(ANDGateN *agaten);
+
+void orgate_init(ORGate *ogate, Path *in1, Path *in2, Path *out1);
+void orgate_run(ORGate *ogate);
 void orgate_driver(Signal a, Signal b);
+
+void orgaten_init(ORGateN *ogaten, Path **ins, Path *out1, int num);
+void orgaten_run(ORGateN *ogaten);
 
 void notgate_init(NOTGate *ngate, Path *in1, Path *out1);
 void notgate_run(NOTGate *ngate);
@@ -109,7 +139,15 @@ void rca_driver(int na, int nb);
 void pfa_init(PFA *pfa, Path *a, Path *b, Path *carryin, Path *g, Path *p, Path *s);
 void pfa_run(PFA *pfa);
 void pfa_release(PFA *pfa);
+void pfa_driver(Signal a, Signal b, Signal carry_in);
 
+void clu_init(CLU *clu, Bus *g, Bus *p, Bus *c, Path *carryout);
+void clu_run(CLU *clu);
+void clu_release(CLU *clu);
+void clu_driver(int ng, int np);
 
-
+void cla4_init(CLA4 *cla4, Bus *a, Bus *b, Path *carryin, Bus *s, Path *carryout, Path *G, Path *P);
+void cla4_run(CLA4 *cla4);
+void cla4_release(CLA4 *cla4);
+void cla4_driver(int na, int nb);
 

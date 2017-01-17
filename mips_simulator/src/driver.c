@@ -47,6 +47,24 @@ int main(int argc, char **argv) {
   rca_driver(1, 0);
   rca_driver(0, 1);
   rca_driver(9823749, 2834234);
+  rca_driver(7823644, -928374);
   
+  printf("PFADriver\n");
+  pfa_driver(true, true, true);
+  pfa_driver(true, true, false);
+  pfa_driver(true, false, true);
+  pfa_driver(true, false, false);
+  pfa_driver(false, true, true);
+  pfa_driver(false, true, false);
+  pfa_driver(false, false, true);
+  pfa_driver(false, false, false);
+
+  printf("CLUDriver\n");
+  clu_driver(1, 14);
+  clu_driver(5, 3);
+
+  printf("CLA4Driver\n");
+  cla4_driver(2, 3);
+
   return 0;
 }
